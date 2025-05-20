@@ -5,6 +5,12 @@
   <title>第一个electron应用</title>
 </head>
 <body>
- <h1>Hello World</h1>
+  <h1>Hello World</h1>
+  <div id="info"></div>
+  <script>
+    console.log('customVar', window.customVar)
+    const info = document.getElementById('info')
+    info.innerHTML = `This app is using Chrome (v${window.customVar.chrome}), Node.js (v${window.customVar.node}), and Electron (v${window.customVar.electron})`
+  </script>
 </body>
 </html>
