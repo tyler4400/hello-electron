@@ -12,5 +12,18 @@
     const info = document.getElementById('info')
     info.innerHTML = `This app is using Chrome (v${window.customVar.chrome}), Node.js (v${window.customVar.node}), and Electron (v${window.customVar.electron})`
   </script>
+  <input id="inputTitle" type="text" placeholder="输入窗口的标题">
+  <button id = "confirmChangeTitle">确认</button>
+  <script>
+    function changeTitle() {
+      console.log('123')
+    }
+    const inputTitle = document.getElementById('inputTitle')
+    const confirmChangeTitle = document.getElementById('confirmChangeTitle')
+    confirmChangeTitle.addEventListener('click', () => {
+      const inputVal = inputTitle.value
+      window.electron.setTitle(inputVal)
+    })
+  </script>
 </body>
 </html>

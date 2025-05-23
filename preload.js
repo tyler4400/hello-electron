@@ -1,4 +1,4 @@
-const { contextBridge } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('customVar', {
   node: process.versions.node,
@@ -9,4 +9,10 @@ contextBridge.exposeInMainWorld('customVar', {
   // exposedProp: 'some-value'
   // ...
   // ...
+})
+
+contextBridge.exposeInMainWorld('electron', {
+  setTitle: title => {
+    ipcRenderer.send('set-title', title)
+  }
 })
