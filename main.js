@@ -9,6 +9,8 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
+      // sandbox: true,
+      // nodeIntegration: true, // 允许渲染进程使用 node
       preload: path.join(__dirname, 'preload.js')
     }
   })
@@ -29,9 +31,13 @@ function createWindow() {
 // }
 function updateCounter(win) {
   let count = 0
+  let timer
   win.webContents.send('update-counter', count)
-  setInterval(() => {
+  timer = setInterval(() => {
     count++
+    if  (count > 10) {
+      clearInterval(timer)
+    }
     win.webContents.send('update-counter', count)
   }, 1000)
 }
