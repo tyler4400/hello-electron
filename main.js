@@ -1,6 +1,9 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Notification } = require('electron')
 const path = require('node:path')
 const fs = require('node:fs')
+const remote = require('@electron/remote/main')
+
+remote.initialize()
 
 const uploadDir = path.join(__dirname, 'uploads')
 
@@ -15,6 +18,7 @@ function createWindow() {
     }
   })
 
+  remote.enable(win.webContents)
   win.loadFile('index.html')
   win.webContents.openDevTools()
   return win
@@ -59,6 +63,17 @@ app.on('ready', () => {
     const stats = fs.statSync(filePath)
     console.log(stats)
     return stats.size
+  })
+  ipcMain.handle('open-dialog', async (event, options) => {
+
+    const files = await dialog.showOpenDialog({
+      properties: ['openFile', 'multiSelections']
+    })
+    console.log('selected files', files)
+    new Notification({
+      title: '选择的第一个文件路径',
+      body: files.filePaths[0],
+    }).show()
   })
   const win = createWindow()
   updateCounter(win)

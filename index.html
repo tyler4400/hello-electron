@@ -56,5 +56,15 @@
       counter.innerHTML = `当前计数：${count}`
     })
   </script>
+  <div>
+    <p>@electron/remote</p>
+    <button id="addCounter">打开弹窗</button>
+  </div>
+  <script>
+    const addCounter = document.getElementById('addCounter')
+    addCounter.addEventListener('click', () => {
+      window.electron.openDialog()
+    })
+  </script>
 </body>
 </html>

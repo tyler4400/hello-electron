@@ -27,4 +27,7 @@ contextBridge.exposeInMainWorld('electron', {
     return ipcRenderer.invoke('write-file', content)
   },
   onUpdateCounter: callback => ipcRenderer.on('update-counter', callback),
+  openDialog: () => ipcRenderer.invoke('open-dialog')
 })
+
+// contextBridge.exposeInMainWorld('require', require)
