@@ -14,5 +14,8 @@ contextBridge.exposeInMainWorld('customVar', {
 contextBridge.exposeInMainWorld('electron', {
   setTitle: title => {
     ipcRenderer.send('set-title', title)
+  },
+  writeFile: (content) => {
+    return ipcRenderer.invoke('write-file', content)
   }
 })

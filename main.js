@@ -1,5 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
+const fs = require('node:fs')
+
+const uploadDir = path.join(__dirname, 'uploads')
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -31,6 +34,17 @@ app.on('ready', () => {
     const webContents = event.sender
     const win = BrowserWindow.fromWebContents(webContents)
     win.setTitle(title)
+  })
+  ipcMain.handle('write-file', (event, content) => {
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir)
+    }
+
+    const filePath = path.join(uploadDir, 'test.txt')
+    fs.writeFileSync(filePath, content)
+    const stats = fs.statSync(filePath)
+    console.log(stats)
+    return stats.size
   })
   createWindow()
 })

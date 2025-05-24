@@ -12,17 +12,36 @@
     const info = document.getElementById('info')
     info.innerHTML = `This app is using Chrome (v${window.customVar.chrome}), Node.js (v${window.customVar.node}), and Electron (v${window.customVar.electron})`
   </script>
-  <input id="inputTitle" type="text" placeholder="输入窗口的标题">
+  <label for="inputTitle">
+    改变窗口标题：
+    <input id="inputTitle" type="text" placeholder="输入窗口的标题">
+  </label>
   <button id = "confirmChangeTitle">确认</button>
   <script>
-    function changeTitle() {
-      console.log('123')
-    }
     const inputTitle = document.getElementById('inputTitle')
     const confirmChangeTitle = document.getElementById('confirmChangeTitle')
     confirmChangeTitle.addEventListener('click', () => {
       const inputVal = inputTitle.value
       window.electron.setTitle(inputVal)
+    })
+  </script>
+  <div>
+    <label>
+      输入文件内容:
+      <input type="text" id="inputFileContent">
+    </label>
+    <button id="writeFile">写入文件</button>
+    <p id="fileContent"></p>
+  </div>
+  <script>
+    const inputFileContent = document.getElementById('inputFileContent')
+    const writeFile = document.getElementById('writeFile')
+    writeFile.addEventListener('click', async () => {
+      const inputVal = inputFileContent.value
+      const size = await window.electron.writeFile(inputVal)
+      console.log('size', size)
+      const fileContent = document.getElementById('fileContent')
+      fileContent.innerHTML = `文件大小：${size}`
     })
   </script>
 </body>
