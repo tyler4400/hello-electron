@@ -27,6 +27,14 @@ function createWindow() {
 //   win.loadFile('second.html')
 //   return win
 // }
+function updateCounter(win) {
+  let count = 0
+  win.webContents.send('update-counter', count)
+  setInterval(() => {
+    count++
+    win.webContents.send('update-counter', count)
+  }, 1000)
+}
 
 app.on('ready', () => {
   ipcMain.on('set-title', (event, title) => {
@@ -46,5 +54,6 @@ app.on('ready', () => {
     console.log(stats)
     return stats.size
   })
-  createWindow()
+  const win = createWindow()
+  updateCounter(win)
 })

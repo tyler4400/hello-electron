@@ -17,5 +17,6 @@ contextBridge.exposeInMainWorld('electron', {
   },
   writeFile: (content) => {
     return ipcRenderer.invoke('write-file', content)
-  }
+  },
+  onUpdateCounter: callback => ipcRenderer.on('update-counter', callback),
 })

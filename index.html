@@ -12,6 +12,7 @@
     const info = document.getElementById('info')
     info.innerHTML = `This app is using Chrome (v${window.customVar.chrome}), Node.js (v${window.customVar.node}), and Electron (v${window.customVar.electron})`
   </script>
+  <p>渲染进程向主进程发送消息</p>
   <label for="inputTitle">
     改变窗口标题：
     <input id="inputTitle" type="text" placeholder="输入窗口的标题">
@@ -26,6 +27,7 @@
     })
   </script>
   <div>
+    <p>主进程和渲染进程通信</p>
     <label>
       输入文件内容:
       <input type="text" id="inputFileContent">
@@ -42,6 +44,16 @@
       console.log('size', size)
       const fileContent = document.getElementById('fileContent')
       fileContent.innerHTML = `文件大小：${size}`
+    })
+  </script>
+  <div>
+    <p>主进程单向渲染进程通信</p>
+    <p id="counter"></p>
+  </div>
+  <script>
+    const counter = document.getElementById('counter')
+    window.electron.onUpdateCounter((event, count) => {
+      counter.innerHTML = `当前计数：${count}`
     })
   </script>
 </body>
