@@ -59,11 +59,23 @@
   <div>
     <p>@electron/remote</p>
     <button id="addCounter">打开弹窗</button>
+    <img id="image-preview" src="" alt="Selected Image Preview" style="max-width: 100%; max-height: 600px;" />
   </div>
   <script>
     const addCounter = document.getElementById('addCounter')
-    addCounter.addEventListener('click', () => {
-      window.electron.openDialog()
+    addCounter.addEventListener('click', async () => {
+      try {
+        const filePaths = await window.electron.openDialog()
+        console.log('Selected file paths:', filePaths);
+
+        // 假设你想显示第一个图片
+        if (filePaths.length > 0) {
+          const imagePath = filePaths[0];
+          document.getElementById('image-preview').src = imagePath;
+        }
+      } catch (error) {
+        console.error('Error opening dialog:', error);
+      }
     })
   </script>
 </body>

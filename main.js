@@ -74,6 +74,7 @@ app.on('ready', () => {
       title: '选择的第一个文件路径',
       body: files.filePaths[0],
     }).show()
+    return files.filePaths
   })
   const win = createWindow()
   updateCounter(win)
